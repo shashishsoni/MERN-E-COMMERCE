@@ -14,3 +14,8 @@ export type T_Product = {
      ratings: T_Rating;
      __V: number;
 }
+
+export type T_SignInBody = {
+     email: string;
+     password: string;
+}

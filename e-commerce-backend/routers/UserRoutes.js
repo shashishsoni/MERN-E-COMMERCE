@@ -49,7 +49,7 @@ router.post("/sign-in", AsyncWapper(async (req, res) => {
 
      //console.log(existingUser);
      if (!existingUser) {
-          return res.send({
+          return res.status(400).send({
                message: "User not found",
                status: false
           });
@@ -61,7 +61,7 @@ router.post("/sign-in", AsyncWapper(async (req, res) => {
      );
 
      if (!isVaildPwd) {
-          return res.send({
+          return res.status(400).send({
                message: "Invalid password",
                status: false
           });
