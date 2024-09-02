@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getAllItems } from "./services/http.service";
 import { T_Product } from "./@types/Types";
 
@@ -15,10 +15,13 @@ function App() {
     }
   };
 
-  fetchData();
+  useEffect(() => {
+    fetchData();
+  },[])
+  
 
   return <div>
-    {productList.map(i => (<p>
+    {productList.map((i) => (<p className="bg-slate-500 text-red-600">
       {i?.title}
     </p>))}
   </div>
