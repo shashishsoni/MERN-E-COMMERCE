@@ -10,6 +10,7 @@ type MyContextProps = {
      setAccessToken: React.Dispatch<React.SetStateAction<string | null>>
      userData: T_UserProfile | null;
      setUserData: React.Dispatch<React.SetStateAction<T_UserProfile | null>>
+     logout: () =>  void;
 }
 // Create a Context
 const AppContext = createContext<MyContextProps | undefined>(undefined);
@@ -35,6 +36,13 @@ export const AppContextProvider = ({ children }: {children: ReactNode}) => {
      : null
   )
 
+  const logout = (): void => {
+     setLoggedIn(false);
+     setAccessToken(null);
+     setUserData(null);
+     localStorage.clear();
+  }
+
   return (
     <AppContext.Provider 
           value={{ 
@@ -43,7 +51,8 @@ export const AppContextProvider = ({ children }: {children: ReactNode}) => {
                accessToken,
                setAccessToken,
                userData,
-               setUserData
+               setUserData,
+               logout
           }}>
       {children}
     </AppContext.Provider>

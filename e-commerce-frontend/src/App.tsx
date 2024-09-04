@@ -53,7 +53,7 @@ function App() {
   return <BrowserRouter>
     <Routes>
        <Route
-          path="/"
+          path="/SignIn"
           element={<SignIn/>}
        />
        <Route
