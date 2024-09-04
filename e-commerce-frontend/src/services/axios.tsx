@@ -16,8 +16,8 @@ axiosInstance.interceptors.request.use(
                "/address//update-address/:id"
           ];
 
-          if(routerRequringAuth.some((route) => config.url.includes(route))) {
-               const token = localStorage.getItem("token");
+          if(routerRequringAuth.some((route) => config.url?.includes(route))) {
+               const token = localStorage.getItem("accessToken");
                
                if(token) {
                     config.headers.Authorization = `Bearer ${token}`;

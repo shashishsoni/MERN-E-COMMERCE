@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import { T_SignInBody } from '../../@types/Types';
 import { postLogin } from '../../services/http.service';
+import { useAppContext } from '../../context/AppContext';
+import  {useNavigate} from 'react-router-dom';
 
 function SignIn() {
+  const navigate = useNavigate();
+  const {setAccessToken, setLoggedIn, setUserData} = useAppContext();
+
+  const [loading, setLoading] = useState<boolean>(false);
   const [userInput, setUserInput] = useState<T_SignInBody>({
     email: '',
     password: '',
@@ -19,15 +25,29 @@ function SignIn() {
   };
 
   const HandleSubmit = async () => {
+
     try {
+
+      setLoading(true);
       const response = await postLogin(userInput);
       console.log(response);
-    } catch (e) {
+      if(response.status === 200) {
+        setAccessToken(response?.data?.access_token);
+        localStorage.setItem('accessToken', response?.data?.access_token);
+        setUserData(response?.data?.user);
+        localStorage.setItem('userData', JSON.stringify(response?.data?.user));
+        setLoggedIn(true)
+        localStorage.setItem('isLoggedIn', JSON.stringify(true));
+
+        navigate('/Home');
+      }
+    } catch (e: any) {
       console.log('SignIn Error', e);
       if(e?.status === 400) {
           setInputError(e?.response?.data?.message)
       }
     } finally {
+      setLoading(false);  
     }
   };
 
@@ -53,10 +73,11 @@ function SignIn() {
         />
         <div>
           <button
-            className=" w-full rounded-md border-white bg-black p-2 text-white"
+            className = {`w-full rounded-md border-white bg-black p-2 text-white ${loading ? 'cursor-not-allowed bg-black' : 'cursor-pointer'}`}
             onClick={HandleSubmit}
+            disabled = {loading}
           >
-            Sign In
+            {loading?'Signing In...':'Sign In'}
           </button>
           {inputError && <h6 className="flex text-left text-red-700 font-bold">{inputError}</h6>}
         </div>

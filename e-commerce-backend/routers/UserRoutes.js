@@ -75,10 +75,13 @@ router.post("/sign-in", AsyncWapper(async (req, res) => {
                }
           );
 
+          existingUser.password = '';
+
           return res.send({
                message: "Login success",
                status: true,
-               access_token: access_token
+               access_token: access_token,
+               user: existingUser,
           });
      }
 }));

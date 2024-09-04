@@ -19,3 +19,14 @@ export type T_SignInBody = {
      email: string;
      password: string;
 }
+
+export type T_UserProfile = {
+     username: string;
+     createAt: string;  
+     email: string;
+     password: string;
+     phone: string;
+     profilePhoto: string;
+     __v: number;
+     _id: string;
+ };
