@@ -44,3 +44,13 @@ app.listen(PORT, () => {
           .then(() => console.log("DB connected"))
           .catch((e) => console.log("Error ++>", e.message));
 })
+
+const cloudinary = require('cloudinary');
+
+cloudinary.v2.config({
+  cloud_name: 'dtbppvpta',
+  api_key: '575994427588995',
+  api_secret: 'JG6tsp-dQT2hggIpleAY6PDPRF0',
+  secure: true,
+});
+

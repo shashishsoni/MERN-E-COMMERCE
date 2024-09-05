@@ -12,6 +12,7 @@
   "dependencies": {
     "argon2": "^0.40.3",
     "bcrypt": "^5.1.1",
+    "cloudinary": "^2.4.0",
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "install": "^0.13.0",

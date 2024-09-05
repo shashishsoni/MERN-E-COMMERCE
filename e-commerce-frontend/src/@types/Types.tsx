@@ -4,8 +4,8 @@ export type T_Rating = {
 };
 
 export type T_Product = {
-     _id: String;
-     title: String;
+     _id: string;
+     name: String;
      price: number;
      description: string;
      category: string;

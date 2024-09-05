@@ -13,7 +13,8 @@ axiosInstance.interceptors.request.use(
                "/orders/get-user-order",
                "/address/get-user-address",
                "/address/create-user-address",
-               "/address//update-address/:id"
+               "/address//update-address/:id",
+               "/inventory/Search",
           ];
 
           if(routerRequringAuth.some((route) => config.url?.includes(route))) {

@@ -48,10 +48,13 @@ export const AppContextProvider = ({ children }: {children: ReactNode}) => {
           value={{ 
                isloggedin,
                setLoggedIn,
+
                accessToken,
                setAccessToken,
+
                userData,
                setUserData,
+               
                logout
           }}>
       {children}

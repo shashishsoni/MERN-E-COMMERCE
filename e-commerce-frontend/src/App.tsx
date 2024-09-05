@@ -1,67 +1,59 @@
-// import React, { useEffect, useState } from 'react';
-// import { getAllItems } from './services/http.service';
-// import { T_Product } from './@types/Types';
-
-// function App() {
-//   const [productList, setProductList] = useState<T_Product[]>([]);
-
-//   const fetchData = async () => {
-//     try {
-//       const response = await getAllItems();
-//       if(response?.status === 200) {
-//         localStorage.setItem('Inventory', JSON.stringify(response?.data?.data));
-//         setProductList(response?.data.data);
-//       } else {
-//         setProductList([]);
-//       }
-//     } catch (e: any) {
-//       console.log('Error: ', e);
-//     }
-//   };
-
-//   useEffect(() => {
-//     fetchData();
-//   }, []);
-
-//   return (
-//     <div>
-//       {/* {productList.map((i) => (
-//         <p className="text-red-600">{i?.title}</p>
-//       ))}
-//       <h1 className="m-2 bg-slate-600 p-5 text-red-500">hello world</h1>
-//        */}
-//        {productList?.length > 0 ? (
-//         productList.map((i) => (
-//           <div>{i?.title}</div>
-//         ))
-//        ) : (
-//         <div>No products found</div>
-//        )}
-//     </div>
-//   );
-// }
-
-// export default App;
-
-
-import React from "react";
+import React from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import SignIn from './pages/SignIn/SignIn';
 import Home from './pages/Home/Home';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useAppContext } from './context/AppContext';
+import Wishlist from './pages/Wishlist/Wishlist';
 
 function App() {
-  return <BrowserRouter>
-    <Routes>
-       <Route
-          path="/SignIn"
-          element={<SignIn/>}
-       />
-       <Route
-          path="/Home"
-          element={<Home/>}
-       />
-    </Routes>
-  </BrowserRouter>
+  const { isloggedin, accessToken, userData } = useAppContext();
+
+  const IsLoggedin: boolean | null =
+    isloggedin && !!accessToken && !!userData?.username;
+
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={IsLoggedin ? <Navigate to="/home" /> : <SignIn />}
+        />
+        <Route
+          path="/home"
+          element={
+            <ProtectedRoute isLoggedin={isloggedin}>
+              <Home />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/wishlist"
+          element={
+            <ProtectedRoute isLoggedin={isloggedin}>
+              <Wishlist />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+            path="*"
+            element = {<Navigate to= "/" />}
+        />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;
+
+interface ProtectedRouteProps {
+  isLoggedin: boolean | null;
+  children: JSX.Element;
+}
+
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
+  isLoggedin,
+  children,
+}) => {
+  return isLoggedin ? children : <Navigate to="/" />;
+};
