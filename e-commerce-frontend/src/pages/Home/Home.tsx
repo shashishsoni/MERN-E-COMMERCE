@@ -73,7 +73,7 @@ function Home() {
                 <img src={item.image} className="w-[60%]" alt="" />
               </div>
               <div
-                className="item-end ml-[150px] mt-4 flex w-3/4 justify-end border-[2px] text-[#212121] shadow-2xl" style={{ borderRadius: '15px 15px 0px 15px' }}
+                className="item-end ml-[95px] mt-4 flex w-3/4 justify-end border-[2px] text-[#212121] shadow-2xl" style={{ borderRadius: '15px 15px 0px 15px' }}
               >
                 <div className="mr-3">
                   <h2 className="justify-end text-end font-serif text-[20px] font-bold">
