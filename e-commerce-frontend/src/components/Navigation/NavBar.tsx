@@ -51,8 +51,8 @@ function NavBar() {
   }, [keyword]);
 
   return (
-    <div className='headers'>
-      <nav className="flex items-center justify-between border px-5 py-3 shadow-lg rounded-xl">
+    <div className='headers sticky top-0'>
+      <nav className="flex items-center justify-between border px-5 py-3 shadow-lg rounded-xl bg-[#b39ddb]">
         <div className="item-center flex gap-x-8">
           <img className="size-8 w-24" src={logo} alt="" />
           <div className="relative" ref={SearchdropDownRef}>

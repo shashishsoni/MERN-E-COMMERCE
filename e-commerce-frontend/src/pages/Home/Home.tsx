@@ -3,8 +3,10 @@ import NavBar from '../../components/Navigation/NavBar';
 import AVI from '../../assets/first-bg.avif';
 import { getInventory } from '../../services/http.service';
 import { T_Product } from '../../@types/Types';
+import { useAppContext } from '../../context/AppContext';
 
 function Home() {
+  const {setUserCart} = useAppContext();
   const [inventory, setinventory] = useState<T_Product[]>([]);
 
   const FetchData = async () => {
@@ -20,14 +22,14 @@ function Home() {
 
   useEffect(() => {
     FetchData();
-  },[]);
+  }, []);
 
   return (
     <div>
       <NavBar />
 
       <section className="m-5">
-        <div className="first_bg mx-auto flex w-full items-center justify-between rounded-lg border-[1px] bg-[#9575cd] p-8 text-white shadow-2xl mt-6 mb-5">
+        <div className="first_bg mx-auto mb-5 mt-6 flex w-full items-center justify-between rounded-lg border-[1px] bg-[#9575cd] p-8 text-white shadow-2xl">
           {/* Left Section - Text Content */}
           <div className="mb-[50px] ml-[115px] w-1/2 space-y-4">
             <h1 className="font-protest text-5xl text-[5.25rem] text-[#512da8]">
@@ -51,19 +53,48 @@ function Home() {
         </div>
 
         <div>
-        <h1 className="font-protest text-5xl text-[5.25rem] text-[#512da8] mt-20 m-5 justify-center text-center">
-              ANIME MERCHANDISE
-            </h1>
-        <p className=' font-pixelify text-5xl text-[2rem] text-[#512da8] mt-2 m-5 justify-center text-center p-8'>
-        Unleash your inner otaku with exclusive anime merchandise—bring home the characters, stories, and adventures you love, and make your collection truly legendary!
-        </p>
+          <h1 className="m-5 mt-20 justify-center text-center font-protest text-5xl text-[5.25rem] text-[#512da8]">
+            ANIME MERCHANDISE
+          </h1>
+          <p className="m-5 mt-2 justify-center p-8 text-center font-pixelify text-5xl text-[2rem] text-[#512da8]">
+            Unleash your inner otaku with exclusive anime merchandise—bring home
+            the characters, stories, and adventures you love, and make your
+            collection truly legendary!
+          </p>
         </div>
 
-        <div className="grid grid-cols-4 gap-4 border-[3px] mt-10 m-5">
-          {inventory?.map((item) => 
-          <div key={item._id} className='border-[3px]'>
-            <div className='aspect-square w-full shadow-md bg-white' style={{ borderRadius: '30% 30% 0% 30%' }} >{item.name}</div>
-            </div>)}
+        <div className="m-5 mt-10 grid grid-cols-4 gap-4 gap-y-14">
+          {inventory?.map((item) => (
+            <div key={item._id}>
+              <div
+                className="flex aspect-square w-full items-center justify-center bg-white shadow-2xl"
+                style={{ borderRadius: '30% 30% 0% 30%' }}
+              >
+                <img src={item.image} className="w-[60%]" alt="" />
+              </div>
+              <div
+                className="item-end ml-[150px] mt-4 flex w-3/4 justify-end border-[2px] text-[#212121] shadow-2xl" style={{ borderRadius: '15px 15px 0px 15px' }}
+              >
+                <div className="mr-3">
+                  <h2 className="justify-end text-end font-serif text-[20px] font-bold">
+                    {item.name}
+                  </h2>
+                  <h3 className="font-ligth justify-end text-end text-[20px]">
+                    {item.category}
+                  </h3>
+                  <h3 className="justify-end text-end text-[20px] font-semibold">
+                    Rs {item.price}
+                  </h3>
+                </div>
+              </div>
+              <button className="gay-x-6 mt-[20px] w-full bg-[#ede7f6] p-3 text-center text-[20px] shadow-2xl" 
+              style={{ borderRadius: '15px 15px 0px 15px' }}
+              onClick={() => setUserCart(prev => ([...prev, item]))}
+              >
+                Add To Cart
+              </button>
+            </div>
+          ))}
         </div>
       </section>
     </div>
