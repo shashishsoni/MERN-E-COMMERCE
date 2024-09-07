@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
-import { T_UserProfile } from '../@types/Types';
+import { T_Product, T_UserProfile } from '../@types/Types';
 
 
 //Define thr shape of the context data
@@ -11,6 +11,8 @@ type MyContextProps = {
      userData: T_UserProfile | null;
      setUserData: React.Dispatch<React.SetStateAction<T_UserProfile | null>>
      logout: () =>  void;
+     Cart: T_Product[];
+     setUserCart: React.Dispatch<React.SetStateAction<T_Product[]>>
 }
 // Create a Context
 const AppContext = createContext<MyContextProps | undefined>(undefined);
@@ -36,6 +38,8 @@ export const AppContextProvider = ({ children }: {children: ReactNode}) => {
      : null
   )
 
+  const [Cart, setUserCart] = useState<T_Product[]>([])
+
   const logout = (): void => {
      setLoggedIn(false);
      setAccessToken(null);
@@ -54,6 +58,9 @@ export const AppContextProvider = ({ children }: {children: ReactNode}) => {
 
                userData,
                setUserData,
+
+               Cart,
+               setUserCart,
                
                logout
           }}>

@@ -4,9 +4,12 @@ import logo from '../../assets/kanjiLogo.svg';
 import { NavLink } from 'react-router-dom';
 import { SearchInventory } from '../../services/http.service';
 import { T_Product } from '../../@types/Types';
+import image from '../../assets/shopping-cart.png'
+import image2 from '../../assets/account.png'
+
 
 function NavBar() {
-  const { logout } = useAppContext();
+  const { logout,Cart} = useAppContext();
   const [keyword, setKeyword] = useState<string>('');
   const [searchResult, setsearchReasult] = useState<T_Product[]>([]);
   const SearchdropDownRef: React.LegacyRef<HTMLDivElement> | undefined =
@@ -48,8 +51,8 @@ function NavBar() {
   }, [keyword]);
 
   return (
-    <div>
-      <nav className="flex items-center justify-between border px-5 py-3 shadow-md">
+    <div className='headers'>
+      <nav className="flex items-center justify-between border px-5 py-3 shadow-lg rounded-xl">
         <div className="item-center flex gap-x-8">
           <img className="size-8 w-24" src={logo} alt="" />
           <div className="relative" ref={SearchdropDownRef}>
@@ -93,7 +96,7 @@ function NavBar() {
             Collection
           </NavLink>
           <NavLink
-            to="/cart"
+            to="/Explore"
             className={({ isActive }) =>
               `nav-link ${isActive ? 'border-b-2 border-[#141414] font-protest' : ''} mt-1 pb-1 text-[20px] font-serif`
             }
@@ -101,8 +104,15 @@ function NavBar() {
             Explore
           </NavLink>
         </div>
-        <div className='flex item-center '>
-
+        <div className='flex item-center font-serif text-[20px]'>
+        <img src={image} alt="" className='h-5 mt-1 mr-2'/>
+            <button>
+              Cart ({Cart.length})
+              </button>
+        <img src={image2} alt="" className='h-6 mt-1 ml-5 mr-1'/>
+            <button>
+              My Account
+            </button>            
         </div>
         {/* <button
           className="rounded-md bg-black px-4 py-2 text-[14px] text-white"

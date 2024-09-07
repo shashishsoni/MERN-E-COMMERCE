@@ -8,6 +8,18 @@
   box-sizing: border-box;
 }
 
+body {
+  background-color: #b39ddb;
+}
+
+.headers {
+  padding: 5px;
+  margin: 15px;
+}
+
+.first_bg {
+  border-radius: 0 20% 24% 21%;
+}
 .Solid {
   border: 2px solid black;
   padding: 2rem;
