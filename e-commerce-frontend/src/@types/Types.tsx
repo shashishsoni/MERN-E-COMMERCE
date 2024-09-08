@@ -30,3 +30,12 @@ export type T_UserProfile = {
      __v: number;
      _id: string;
  };
+
+ export type T_SignUpBody = {
+     username: string;
+     firstname?: string;
+     lastname?: string;
+     email: string;
+     password: string;
+     confirmPassword: string;
+ }

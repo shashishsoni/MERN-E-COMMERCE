@@ -1,5 +1,5 @@
 import axiosInstance from "./axios";
-import { T_SignInBody } from "../@types/Types";
+import { T_SignInBody, T_SignUpBody } from "../@types/Types";
 
 export const getInventory = async () => {
      const response = await axiosInstance.get("/inventory");
@@ -13,3 +13,8 @@ export const postLogin = async (body: T_SignInBody) => {
 export const SearchInventory = async (keyword: string) => {
      const response = await axiosInstance.get(`/inventory/Search/${keyword}`);
      return response;}
+
+export const PostSignUp = async (body: T_SignUpBody) => {
+     const response = await axiosInstance.post("/Users/sign-up", body);
+     return response;
+}

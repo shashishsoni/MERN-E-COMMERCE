@@ -4,32 +4,31 @@ import logo from '../../assets/kanjiLogo.svg';
 import { NavLink } from 'react-router-dom';
 import { SearchInventory } from '../../services/http.service';
 import { T_Product } from '../../@types/Types';
-import image from '../../assets/shopping-cart.png'
-import image2 from '../../assets/account.png'
-
+import image from '../../assets/shopping-cart.png';
+import image2 from '../../assets/account.png';
 
 function NavBar() {
-  const { logout,Cart} = useAppContext();
+  const { logout, Cart } = useAppContext();
   const [keyword, setKeyword] = useState<string>('');
   const [searchResult, setsearchReasult] = useState<T_Product[]>([]);
-  const SearchdropDownRef: React.LegacyRef<HTMLDivElement> | undefined =
-    useRef(null);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // For the account dropdown
+  const SearchdropDownRef: React.LegacyRef<HTMLDivElement> | undefined = useRef(null);
+  const AccountdropDownRef = useRef<HTMLDivElement>(null);
 
   const Search = async (keyword: string) => {
     if (!keyword) return setsearchReasult([]);
-    // code for search functionality
     const response = await SearchInventory(keyword);
     setsearchReasult(response?.data?.data);
-    console.log(response?.data?.data);
   };
 
   const handleClickOutside = (event: MouseEvent) => {
     if (
-      SearchdropDownRef.current &&
-      !SearchdropDownRef.current.contains(event.target as Node)
+      (SearchdropDownRef.current && !SearchdropDownRef.current.contains(event.target as Node)) ||
+      (AccountdropDownRef.current && !AccountdropDownRef.current.contains(event.target as Node))
     ) {
       setsearchReasult([]);
       setKeyword('');
+      setIsDropdownOpen(false); // Close account dropdown if clicked outside
     }
   };
 
@@ -44,14 +43,17 @@ function NavBar() {
     let timeOut = setTimeout(() => {
       Search(keyword);
     }, 500);
-
     return () => {
       clearTimeout(timeOut);
     };
   }, [keyword]);
 
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
   return (
-    <div className='headers sticky top-0'>
+    <div className="headers sticky top-0">
       <nav className="flex items-center justify-between border px-5 py-3 shadow-lg rounded-xl bg-[#b39ddb]">
         <div className="item-center flex gap-x-8">
           <img className="size-8 w-24" src={logo} alt="" />
@@ -61,15 +63,15 @@ function NavBar() {
               placeholder="Search"
               className="mt-1 w-[300px] border-collapse rounded-md border-gray-700 bg-gray-200 px-2 py-2 outline-none"
               value={keyword}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setKeyword(e.target.value);
-              }}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setKeyword(e.target.value)}
             />
-            {/* condition oprator */}
             {searchResult?.length > 0 && (
               <div className="absolute mt-2 max-h-[500px] w-full overflow-y-auto bg-slate-50 p-5 shadow-md Search_Result">
                 {searchResult.map((res) => (
-                  <div key={res._id} className="flex items-start gap-x-2 pb-5 pt-5 pl-3 hover:bg-slate-400 rounded-lg">
+                  <div
+                    key={res._id}
+                    className="flex items-start gap-x-2 pb-5 pt-5 pl-3 hover:bg-slate-400 rounded-lg"
+                  >
                     <img className="mr-5 aspect-square w-16" src={res.image} />
                     <h2 className="text-[14px] text-center justify-center mt-6">{res.name}</h2>
                   </div>
@@ -78,6 +80,7 @@ function NavBar() {
             )}
           </div>
         </div>
+
         <div className="flex gap-x-6">
           <NavLink
             to="/Home"
@@ -104,22 +107,43 @@ function NavBar() {
             Explore
           </NavLink>
         </div>
-        <div className='flex item-center font-serif text-[20px]'>
-        <img src={image} alt="" className='h-5 mt-1 mr-2'/>
-            <button>
-              Cart ({Cart.length})
+
+        <div className="flex items-center font-serif text-[20px] relative" ref={AccountdropDownRef}>
+          <img src={image} alt="" className="h-5 mt-1 mr-2" />
+          <button>
+            Cart ({Cart.length})
+          </button>
+          <img src={image2} alt="" className="h-6 mt-1 ml-5 mr-1" />
+          <button onClick={toggleDropdown}>
+            My Account
+          </button>
+
+          {isDropdownOpen && (
+            <div className="absolute right-[-9px] top-full mt-2 w-36 bg-[#ab96d1] text-black rounded-lg shadow-lg">
+              <NavLink to="/sign-in" className="block px-4 py-2 hover:bg-gray-200">
+                Sign In
+              </NavLink>
+              <NavLink to="/SignUp" className="block px-4 py-2 hover:bg-gray-200">
+                Sign Up
+              </NavLink>
+              <NavLink to="/profile" className="block px-4 py-2 hover:bg-gray-200">
+                Profile
+              </NavLink>
+              <NavLink to="/orders" className="block px-4 py-2 hover:bg-gray-200">
+                Orders
+              </NavLink>
+              <NavLink to="/settings" className="block px-4 py-2 hover:bg-gray-200">
+                Settings
+              </NavLink>
+              <button
+                onClick={logout}
+                className="block w-full text-left px-4 py-2 hover:bg-gray-200"
+              >
+                Sign Out
               </button>
-        <img src={image2} alt="" className='h-6 mt-1 ml-5 mr-1'/>
-            <button>
-              My Account
-            </button>            
+            </div>
+          )}
         </div>
-        {/* <button
-          className="rounded-md bg-black px-4 py-2 text-[14px] text-white"
-          onClick={logout}
-        >
-          Sign Out
-        </button> */}
       </nav>
     </div>
   );

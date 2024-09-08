@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import SignIn from './pages/SignIn/SignIn';
 import Home from './pages/Home/Home';
+import SignUp from './pages/SignUp/SignUp';
 import { useAppContext } from './context/AppContext';
 import Wishlist from './pages/Wishlist/Wishlist';
 
@@ -33,6 +34,11 @@ function App() {
               <Wishlist />
             </ProtectedRoute>
           }
+        />
+
+        <Route
+        path="/SignUp"
+        element={<SignUp />}
         />
 
         <Route
