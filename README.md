@@ -191,3 +191,11 @@ Example:
 ++License++
 
 This project is licensed under the MIT License.
+
+<h1 style = "text-center">The output of the website Image</h1>
+
+![ui](https://github.com/user-attachments/assets/dd926a5a-1afb-4300-81b5-684b91e5c396)                              ![sign up](https://github.com/user-attachments/assets/a8dd072e-8a85-4ef9-88a7-5911642be1f3)
+![sign in](https://github.com/user-attachments/assets/eaed4df0-29da-4d9f-8a79-bb7dbcee6e1f)
+![cart](https://github.com/user-attachments/assets/1fadf6d5-e915-43cd-b77a-4ec8ba2e2a7d)
+
+
