@@ -5,6 +5,7 @@ import Home from './pages/Home/Home';
 import SignUp from './pages/SignUp/SignUp';
 import { useAppContext } from './context/AppContext';
 import Wishlist from './pages/Wishlist/Wishlist';
+import CartPage from './pages/cart/CartPage'
 
 function App() {
   const { isloggedin, accessToken, userData } = useAppContext();
@@ -34,6 +35,15 @@ function App() {
               <Wishlist />
             </ProtectedRoute>
           }
+        />
+
+        <Route
+        path = "/CartPage"
+        element = {
+          <ProtectedRoute isLoggedin={isloggedin}>
+            <CartPage />
+            </ProtectedRoute>
+        }
         />
 
         <Route

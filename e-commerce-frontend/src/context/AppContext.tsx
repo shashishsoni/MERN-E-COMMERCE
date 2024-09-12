@@ -36,7 +36,10 @@ export const AppContextProvider = ({ children }: {children: ReactNode}) => {
      : null
   )
 
-  const [Cart, setUserCart] = useState<T_Product[]>([])
+  const [Cart, setUserCart] = useState<T_Product[]>(() => {
+     const storedCart = localStorage.getItem('cart');
+     return storedCart ? JSON.parse(storedCart) : [];
+  })
 
   const logout = (): void => {
      setLoggedIn(false);

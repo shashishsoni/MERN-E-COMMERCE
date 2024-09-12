@@ -6,7 +6,7 @@ import { T_Product } from '../../@types/Types';
 import { useAppContext } from '../../context/AppContext';
 
 function Home() {
-  const { setUserCart } = useAppContext();
+  const { Cart, setUserCart } = useAppContext();
   const [inventory, setInventory] = useState<T_Product[]>([]);
 
   const fetchData = async () => {
@@ -19,6 +19,26 @@ function Home() {
       console.log(e);
     }
   };
+  
+  const addToCart = (product: T_Product) => {
+    const existingItem = Cart.find(item => item._id === product._id);
+  
+    if (existingItem) {
+      setUserCart(
+        Cart.map(item => 
+          item._id === product._id 
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        )
+      );
+    } else {
+      setUserCart([
+        ...Cart,
+        { ...product, quantity: 1 } // Ensure new items start with quantity 1
+      ]);
+    }
+  };
+  
 
   useEffect(() => {
     fetchData();
@@ -91,7 +111,7 @@ function Home() {
               <button
                 className="gap-x-6 mt-[20px] w-full bg-[#ede7f6] p-3 text-center text-[20px] shadow-2xl"
                 style={{ borderRadius: '15px 15px 0px 15px' }}
-                onClick={() => setUserCart((prev) => [...prev, item])}
+                onClick={() => addToCart(item)}
               >
                 Add To Cart
               </button>

@@ -117,7 +117,11 @@ function NavBar() {
         <div className="flex items-center font-serif text-[20px] relative" ref={AccountdropDownRef}>
           <img src={image} alt="" className="h-5 mt-1 mr-2" />
           <button>
+            <NavLink 
+              to = "/CartPage"
+            >
             Cart ({Cart.length})
+            </NavLink>
           </button>
           <img src={image2} alt="" className="h-6 mt-1 ml-5 mr-1" />
           <button onClick={toggleDropdown}>
