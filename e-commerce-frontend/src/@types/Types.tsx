@@ -32,10 +32,17 @@ export type T_UserProfile = {
  };
 
  export type T_SignUpBody = {
-     username: string;
+     Username: string;
      firstname?: string;
      lastname?: string;
      email: string;
      password: string;
      confirmPassword: string;
+ }
+
+ export type T_Authenticated = {
+     isAuthenticated: boolean;
+     login: (token: string) => void;
+     logout: () => void;
+     Cart: any[];
  }

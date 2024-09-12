@@ -1,18 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useAppContext } from '../../context/AppContext';
 import logo from '../../assets/kanjiLogo.svg';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { SearchInventory } from '../../services/http.service';
 import { T_Product } from '../../@types/Types';
 import image from '../../assets/shopping-cart.png';
 import image2 from '../../assets/account.png';
 
-function NavBar() {
-  const { logout, Cart } = useAppContext();
+function NavBar() { 
+  const navigate = useNavigate();
+  const { isloggedin, logout, Cart } = useAppContext();
   const [keyword, setKeyword] = useState<string>('');
   const [searchResult, setsearchReasult] = useState<T_Product[]>([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false); // For the account dropdown
-  const SearchdropDownRef: React.LegacyRef<HTMLDivElement> | undefined = useRef(null);
+  const SearchdropDownRef = useRef<HTMLDivElement>(null);
   const AccountdropDownRef = useRef<HTMLDivElement>(null);
 
   const Search = async (keyword: string) => {
@@ -21,14 +22,19 @@ function NavBar() {
     setsearchReasult(response?.data?.data);
   };
 
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
+
   const handleClickOutside = (event: MouseEvent) => {
     if (
-      (SearchdropDownRef.current && !SearchdropDownRef.current.contains(event.target as Node)) ||
+      (SearchdropDownRef.current && !SearchdropDownRef.current.contains(event.target as Node)) &&
       (AccountdropDownRef.current && !AccountdropDownRef.current.contains(event.target as Node))
     ) {
       setsearchReasult([]);
       setKeyword('');
-      setIsDropdownOpen(false); // Close account dropdown if clicked outside
+      setIsDropdownOpen(false); 
     }
   };
 
@@ -120,27 +126,28 @@ function NavBar() {
 
           {isDropdownOpen && (
             <div className="absolute right-[-9px] top-full mt-2 w-36 bg-[#ab96d1] text-black rounded-lg shadow-lg">
-              <NavLink to="/sign-in" className="block px-4 py-2 hover:bg-gray-200">
-                Sign In
-              </NavLink>
-              <NavLink to="/SignUp" className="block px-4 py-2 hover:bg-gray-200">
-                Sign Up
-              </NavLink>
-              <NavLink to="/profile" className="block px-4 py-2 hover:bg-gray-200">
-                Profile
-              </NavLink>
-              <NavLink to="/orders" className="block px-4 py-2 hover:bg-gray-200">
-                Orders
-              </NavLink>
-              <NavLink to="/settings" className="block px-4 py-2 hover:bg-gray-200">
-                Settings
-              </NavLink>
-              <button
-                onClick={logout}
-                className="block w-full text-left px-4 py-2 hover:bg-gray-200"
-              >
-                Sign Out
-              </button>
+              {isloggedin ? (
+                <>
+                  <NavLink to="/profile" className="block px-4 py-2 hover:bg-gray-200">
+                    Profile
+                  </NavLink>
+                  <NavLink to="/orders" className="block px-4 py-2 hover:bg-gray-200">
+                    Orders
+                  </NavLink>
+                  <button onClick={handleLogout} className="block w-full text-left px-4 py-2 hover:bg-gray-200">
+                    Sign Out
+                  </button>
+                </>
+              ) : (
+                <>
+                  <NavLink to="/SignIn" className="block px-4 py-2 hover:bg-gray-200">
+                    Sign In
+                  </NavLink>
+                  <NavLink to="/SignUp" className="block px-4 py-2 hover:bg-gray-200">
+                    Sign Up
+                  </NavLink>
+                </>
+              )}
             </div>
           )}
         </div>

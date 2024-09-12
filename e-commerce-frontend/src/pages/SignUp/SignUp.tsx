@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { T_SignUpBody } from '../../@types/Types';
 import { PostSignUp } from '../../services/http.service';
 import { useNavigate } from 'react-router-dom';
-import NavBar from "../../components/Navigation/NavBar";
+//import NavBar from "../../components/Navigation/NavBar";
 import image from '../../assets/welcome.png';
 
 function SignUp() {
@@ -10,7 +10,7 @@ function SignUp() {
 
   // State for form inputs and errors
   const [userInput, setUserInput] = useState<T_SignUpBody>({
-    username: '',
+    Username: '',
     firstname: '',
     lastname: '',
     email: '',
@@ -23,6 +23,7 @@ function SignUp() {
 
   // Handle form input changes
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.name, e.target.value);
     setInputError('');
     setUserInput((prevState) => ({
       ...prevState,
@@ -35,9 +36,10 @@ function SignUp() {
     try {
       setLoading(true);
       const response = await PostSignUp(userInput);
+      console.log(response);
 
       // If registration is successful, redirect to the SignIn page
-      if (response.status === 201) {
+      if (response.status === 200) {
         navigate('/SignIn');
       }
     } catch (error: any) {
@@ -49,7 +51,6 @@ function SignUp() {
 
   return (
     <div className="relative flex h-screen w-screen items-center justify-center bg-gray-100 border-navajowhite bg-navajowhite">
-     <NavBar/>
       <div className="w-1/2 h-full flex items-center justify-center" style={{ backgroundColor: 'rgb(250 159 21)' }}>
       </div>
 
@@ -72,7 +73,7 @@ function SignUp() {
         </div>
 
         <div className="absolute inset-0 flex justify-center items-center">
-          <div className="relative w-[60%] h-[50%] flex overflow-hidden rounded-lg shadow-lg z-10 border-[3px] border-white">
+          <div className="relative w-[60%] h-[55%] flex overflow-hidden rounded-lg shadow-lg z-10 border-[3px] border-white">
 
             {/* Left Side: Welcome Section */}
             <div className="flex w-1/2 flex-col items-center justify-center p-10">
@@ -80,7 +81,7 @@ function SignUp() {
               <p className="text-center font-nerko text-yellow-950">
                 Create your account and start shopping for exclusive anime merchandise!
               </p>
-              <img src={image} alt="Welcome" className="mt-6 w-4/5" />
+              <img src={image} alt="Welcome" className="mb-[-67px] mt-6 w-4/5" />
             </div>
 
             {/* Right Side: Registration Form */}
@@ -92,8 +93,8 @@ function SignUp() {
                 type="text"
                 className="mb-4 w-full rounded-md border p-3 outline-none focus:ring-2 focus:ring-yellow-400"
                 onChange={handleInput}
-                value={userInput.username}
-                name="username"
+                value={userInput.Username}
+                name="Username"
               />
 
               <input
@@ -113,6 +114,16 @@ function SignUp() {
                 value={userInput.password}
                 name="password"
               />
+
+              <input
+                placeholder="Confrom Password"
+                type="password"
+                className="mb-4 w-full rounded-md border p-3 outline-none focus:ring-2 focus:ring-yellow-400"
+                onChange={handleInput}
+                value={userInput.confirmPassword} // This should link to confirmPassword
+                name="confirmPassword" // Ensure this is correct
+              />
+
 
               <button
                 className={`w-full rounded-md p-3 text-white font-bold transition duration-200 hover:bg-yellow-500 focus:outline-none ${loading ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}

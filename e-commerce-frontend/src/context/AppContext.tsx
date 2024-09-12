@@ -21,9 +21,7 @@ const AppContext = createContext<MyContextProps | undefined>(undefined);
 export const AppContextProvider = ({ children }: {children: ReactNode}) => {
   // State that you want to share
   const [isloggedin, setLoggedIn] = useState<boolean | null>(
-     localStorage .getItem('isloggedin')
-     ?JSON.parse(localStorage.getItem('isloggedin') || 'false')
-     :false
+     localStorage.getItem("isLoggedIn") === "true"
   )
 
   const [accessToken, setAccessToken] = useState<string | null>(

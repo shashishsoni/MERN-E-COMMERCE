@@ -17,7 +17,7 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={IsLoggedin ? <Navigate to="/home" /> : <SignIn />}
+          element={IsLoggedin ? <Navigate to="/home" /> : <Home />}
         />
         <Route
           path="/home"
@@ -28,7 +28,7 @@ function App() {
           }
         />
         <Route
-          path="/wishlist"
+          path="/Wishlist"
           element={
             <ProtectedRoute isLoggedin={isloggedin}>
               <Wishlist />
@@ -39,6 +39,11 @@ function App() {
         <Route
         path="/SignUp"
         element={<SignUp />}
+        />
+
+        <Route
+        path="/SignIn"
+        element={<SignIn />}
         />
 
         <Route

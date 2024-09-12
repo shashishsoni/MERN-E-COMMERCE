@@ -6,14 +6,14 @@ import { T_Product } from '../../@types/Types';
 import { useAppContext } from '../../context/AppContext';
 
 function Home() {
-  const {setUserCart} = useAppContext();
-  const [inventory, setinventory] = useState<T_Product[]>([]);
+  const { setUserCart } = useAppContext();
+  const [inventory, setInventory] = useState<T_Product[]>([]);
 
-  const FetchData = async () => {
+  const fetchData = async () => {
     try {
       const resp = await getInventory();
       if (resp?.status === 200) {
-        setinventory(resp?.data?.data);
+        setInventory(resp?.data?.data);
       }
     } catch (e: unknown) {
       console.log(e);
@@ -21,7 +21,7 @@ function Home() {
   };
 
   useEffect(() => {
-    FetchData();
+    fetchData();
   }, []);
 
   return (
@@ -70,16 +70,17 @@ function Home() {
                 className="flex aspect-square w-full items-center justify-center bg-white shadow-2xl"
                 style={{ borderRadius: '30% 30% 0% 30%' }}
               >
-                <img src={item.image} className="w-[60%]" alt="" />
+                <img src={item.image} className="w-[60%]"/>
               </div>
               <div
-                className="item-end ml-[95px] mt-4 flex w-3/4 justify-end border-[2px] text-[#212121] shadow-2xl" style={{ borderRadius: '15px 15px 0px 15px' }}
+                className="item-end ml-[95px] mt-4 flex w-3/4 justify-end border-[2px] text-[#212121] shadow-2xl"
+                style={{ borderRadius: '15px 15px 0px 15px' }}
               >
                 <div className="mr-3">
                   <h2 className="justify-end text-end font-serif text-[20px] font-bold">
                     {item.name}
                   </h2>
-                  <h3 className="font-ligth justify-end text-end text-[20px]">
+                  <h3 className="font-light justify-end text-end text-[20px]">
                     {item.category}
                   </h3>
                   <h3 className="justify-end text-end text-[20px] font-semibold">
@@ -87,9 +88,10 @@ function Home() {
                   </h3>
                 </div>
               </div>
-              <button className="gay-x-6 mt-[20px] w-full bg-[#ede7f6] p-3 text-center text-[20px] shadow-2xl" 
-              style={{ borderRadius: '15px 15px 0px 15px' }}
-              onClick={() => setUserCart(prev => ([...prev, item]))}
+              <button
+                className="gap-x-6 mt-[20px] w-full bg-[#ede7f6] p-3 text-center text-[20px] shadow-2xl"
+                style={{ borderRadius: '15px 15px 0px 15px' }}
+                onClick={() => setUserCart((prev) => [...prev, item])}
               >
                 Add To Cart
               </button>
