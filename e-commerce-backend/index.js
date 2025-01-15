@@ -29,7 +29,7 @@ app.use("/orders", Auth, orderRoutes);
 // Final middleware
 app.use(errorHandler); // Error handling
 
-const PORT = 8000;
+const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
     mongoose
