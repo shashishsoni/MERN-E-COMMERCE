@@ -1,0 +1,11 @@
+{
+    "routes": [
+      {
+        "src": "/(.*)",
+        "headers": [
+          { "key": "Content-Type", "value": "application/javascript" }
+        ]
+      }
+    ]
+  }
+  
