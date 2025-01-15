@@ -1,9 +1,10 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-     baseURL: "http://localhost:8000",
+    baseURL: process.env.NODE_ENV === 'production' 
+        ? "https://mern-e-commerce-ct2v.onrender.com" 
+        : "http://localhost:8000",
 });
-
 
 axiosInstance.interceptors.request.use(
      (config) => {
