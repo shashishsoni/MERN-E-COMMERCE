@@ -13,7 +13,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: ['https://mern-e-commerce-1-svyi.onrender.com', 'http://localhost:5173'] // Allow your frontend URL
+    origin: ['https://mern-e-commerce-1-svyi.onrender.com', 'http://localhost:5173'] // Allow your frontend URLs
 }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

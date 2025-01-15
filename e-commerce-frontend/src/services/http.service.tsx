@@ -1,7 +1,7 @@
 import axiosInstance from "./axios";
 import { T_SignInBody, T_SignUpBody } from "../@types/Types";
 
-const API_URL = ["https://mern-e-commerce-ct2v.onrender.com", "http://localhost:8000"]; // Set your backend URL
+const API_URL = "https://mern-e-commerce-ct2v.onrender.com"; // Set your backend URL
 
 export const getInventory = async () => {
      const response = await axiosInstance.get(`${API_URL}/inventory`); // Use the backend URL
