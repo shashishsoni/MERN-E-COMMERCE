@@ -1,10 +1,18 @@
 {
+    "version": 2,
+    "builds": [
+      {
+        "src": "dist/index.html",
+        "use": "@vercel/static"
+      }
+    ],
     "routes": [
       {
         "src": "/(.*)",
-        "headers": [
-          { "key": "Content-Type", "value": "application/javascript" }
-        ]
+        "dest": "/dist/index.html",
+        "headers": {
+          "Cache-Control": "no-cache"
+        }
       }
     ]
   }
