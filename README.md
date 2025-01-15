@@ -187,10 +187,6 @@ Example:
         throw error;
       }
     };
-    
-++License++
-
-This project is licensed under the MIT License.
 
 <h1 style = "text-center">The output of the website Image</h1>
 
