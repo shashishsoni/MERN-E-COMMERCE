@@ -1,4 +1,3 @@
-import React from "react";
 import NavBar from "../../components/Navigation/NavBar";
 function WishList() {
      return <div>

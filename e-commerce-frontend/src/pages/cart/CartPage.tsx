@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useAppContext } from "../../context/AppContext";
 import NavBar from "../../components/Navigation/NavBar";
-import { T_Product } from "../../@types/Types";
 
 function Cart() {
   const { Cart, setUserCart } = useAppContext();

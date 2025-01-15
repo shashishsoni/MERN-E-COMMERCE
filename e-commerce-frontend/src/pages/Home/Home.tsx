@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import NavBar from '../../components/Navigation/NavBar';
 import AVI from '../../assets/first-bg.avif';
 import { getInventory } from '../../services/http.service';
