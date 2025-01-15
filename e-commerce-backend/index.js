@@ -22,6 +22,15 @@ app.use(
 app.use(express.json());
 app.use(morgan("tiny"));
 
+// Serve static files with correct MIME types
+app.use(express.static('public', {
+     setHeaders: (res, path) => {
+          if (path.endsWith('.tsx')) {
+               res.set('Content-Type', 'application/javascript');
+          }
+     }
+}));
+
 //routes calling
 
 app.use("/inventory",InventoryRoutes)
